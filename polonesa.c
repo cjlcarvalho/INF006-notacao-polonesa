@@ -13,10 +13,10 @@ int em_ordem(struct no*);
 int pre_ordem(struct no*);
 int pos_ordem(struct no*);
 int print_nodo(struct no*);
+int calcula_altura(struct no*);
 struct no* monta_arvore();
 char retorna_elem(int*);
 float calcula_resultado(struct no*);
-int calcula_altura(struct no*);
 
 char pilha[255];
 int top;
