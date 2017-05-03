@@ -100,11 +100,9 @@ int valida_entrada(char* entrada){
                 && entrada[i] != ' ')
             return 0;
         else if(entrada[i] == '*' || entrada[i] == '/' || entrada[i] == '-' || entrada[i] == '+'){
-            if(entrada[i+1])
-                if(entrada[i+1] != ' ')
+            if(entrada[i+1] && entrada[i+1] != ' ')
                     return 0;
-            if(i - 1 >= 0)
-                if(entrada[i-1] != ' ')
+            if(i - 1 >= 0 && entrada[i-1] != ' ')
                     return 0;
         }
     }
