@@ -14,6 +14,9 @@ int pre_ordem(struct no*);
 int pos_ordem(struct no*);
 int print_nodo(struct no*);
 int calcula_altura(struct no*);
+int valida_entrada(char*);
+int conta_itens(struct no*, char*);
+int elementos_arv(struct no*);
 struct no* monta_arvore();
 char retorna_elem(int*);
 float calcula_resultado(struct no*);
@@ -26,8 +29,14 @@ int main(){
     scanf(" %[^\n]s", pilha);
 
     top = strlen(pilha) - 1;
+
     struct no* raiz = monta_arvore();
     
+    if(!valida_entrada(pilha) || !conta_itens(raiz, pilha)){
+        puts("Notação incorreta.");
+        return 0;
+    }
+
     printf("Em ordem: ");
     em_ordem(raiz);
     printf("\n");
@@ -81,16 +90,58 @@ int print_nodo(struct no* r){
     return 1;
 }
 
+int valida_entrada(char* entrada){
+    for(int i = 0; entrada[i]; i++)
+        if((entrada[i] < '0' || entrada[i] > '9') \
+                && entrada[i] != '*' \
+                && entrada[i] != '/' \
+                && entrada[i] != '-' \
+                && entrada[i] != '+' \
+                && entrada[i] != ' ')
+            return 0;
+    return 1;
+}
+
+int conta_itens(struct no* r, char* p){
+    int result_p = 0, result_r = 0;
+    for(int i = 0; p[i]; i++){
+        if(p[i] != ' '){
+            result_p++;
+            while(p[i] != ' ' && p[i])
+                i++;
+        }
+    }
+
+    result_r = elementos_arv(r);
+    return (result_p != result_r + 1) ? 0 : 1;
+}
+
+int elementos_arv(struct no* r){
+    if(r){
+        int esq = 1 + elementos_arv(r->esq);
+        int dir = 1 + elementos_arv(r->dir);
+        return esq + dir;
+    }
+    return -1;
+}
+
 struct no* monta_arvore(){
     char op;
     int valor;
+    int t1, t2;
     struct no* nodo = (struct no*)malloc(sizeof(struct no));
     op = retorna_elem(&valor);
     nodo->valor = valor;
     nodo->op = op;
     if(op){
         nodo->dir = monta_arvore();
+        t1 = top;
         nodo->esq = monta_arvore();
+        t2 = top;
+        if(t1 < 0 && t2 < 0){
+            printf("Notação incorreta.\n");
+            exit(1);
+        }
     }
     else{
         nodo->dir = NULL;
