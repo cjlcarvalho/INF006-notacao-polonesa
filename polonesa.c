@@ -112,8 +112,8 @@ int conta_itens(struct no* r, char* p){
         }
     }
 
-    result_r = elementos_arv(r);
-    return (result_p != result_r + 1) ? 0 : 1;
+    result_r = elementos_arv(r) + 1;
+    return (result_p != result_r) ? 0 : 1;
 }
 
 int elementos_arv(struct no* r){
@@ -127,8 +127,7 @@ int elementos_arv(struct no* r){
 
 struct no* monta_arvore(){
     char op;
-    int valor;
-    int t1, t2;
+    int valor, t1, t2;
     struct no* nodo = (struct no*)malloc(sizeof(struct no));
     op = retorna_elem(&valor);
     nodo->valor = valor;
