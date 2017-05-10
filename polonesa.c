@@ -57,9 +57,11 @@ int main(){
 
 int em_ordem(struct no* r){
     if(r){
+        printf(" ( ");
         em_ordem(r->esq);
         print_nodo(r);
         em_ordem(r->dir);
+        printf(" ) ");
     }
     return 1;
 }
@@ -84,9 +86,9 @@ int pos_ordem(struct no* r){
 
 int print_nodo(struct no* r){
     if(r->op)
-        printf("%c ", r->op);
+        printf(" %c ", r->op);
     else
-        printf("%d ", r->valor);
+        printf(" %d ", r->valor);
     return 1;
 }
 
